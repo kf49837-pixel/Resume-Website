@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = "/api";
+
 function Resumes() {
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
-
-  const API_URL = "https://backend-olive-theta-58.vercel.app";
 
   // ==========================================
   // GET ALL RESUMES
@@ -21,7 +21,7 @@ function Resumes() {
       setLoading(true);
       setError("");
 
-      const response = await fetch(`${API_URL}/api/resumes`);
+      const response = await fetch(`${API_BASE_URL}/resumes`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -59,7 +59,7 @@ function Resumes() {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/resumes/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/resumes/${id}`, {
         method: "DELETE",
       });
 
@@ -127,7 +127,7 @@ function Resumes() {
 
     const cleanPath = filePath.replace(/\\/g, "/");
 
-    return `${API_URL}/${cleanPath}`;
+    return `/${cleanPath}`;
   };
 
   // ==========================================

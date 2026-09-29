@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_BASE_URL = "/api";
+
 function UploadForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -32,7 +34,7 @@ function UploadForm() {
         setPageLoading(true);
 
         const response = await fetch(
-          `https://backend-olive-theta-58.vercel.app/api/resumes/${editId}`
+          `${API_BASE_URL}/resumes/${editId}`
         );
 
         const data = await response.json();
@@ -99,8 +101,8 @@ function UploadForm() {
       setLoading(true);
 
       const url = isEditMode
-        ? `https://backend-olive-theta-58.vercel.app/api/resumes/${editId}`
-        : "https://backend-olive-theta-58.vercel.app/api/upload";
+        ? `${API_BASE_URL}/resumes/${editId}`
+        : `${API_BASE_URL}/upload`;
 
       const response = await fetch(url, {
         method: isEditMode ? "PUT" : "POST",
