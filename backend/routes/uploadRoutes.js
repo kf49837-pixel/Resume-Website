@@ -1,9 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const fs = require("fs");
 
 const upload = require("../middleware/upload");
 const Resume = require("../models/Resume");
+const {
+  uploadResumeFile,
+  getResumeFile,
+  downloadResumeFile,
+  deleteResumeFile,
+} = require("../utils/resumeFiles");
 
 const router = express.Router();
 
@@ -12,6 +17,31 @@ const router = express.Router();
 // POST /api/upload
 // Upload a new resume
 // ==========================================
+
+router.get("/files/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid file ID" });
+  }
+
+  const file = await getResumeFile(id);
+
+  if (!file) {
+    return res.status(404).json({ message: "Resume file not found" });
+  }
+
+  res.setHeader("Content-Type", file.contentType || "application/octet-stream");
+  res.setHeader(
+    "Content-Disposition",
+    `inline; filename*=UTF-8''${encodeURIComponent(file.filename)}`
+  );
+
+  downloadResumeFile(id).on("error", (error) => {
+    if (!res.headersSent) res.status(404).end();
+    else res.destroy(error);
+  }).pipe(res);
+});
 
 router.post("/upload", upload.single("image"), async (req, res) => {
   try {
@@ -29,13 +59,14 @@ router.post("/upload", upload.single("image"), async (req, res) => {
       });
     }
 
+    const fileId = await uploadResumeFile(req.file);
     const resume = await Resume.create({
       name,
       email,
       fileName: req.file.originalname,
       fileType: req.file.mimetype,
       fileSize: req.file.size,
-      filePath: req.file.path,
+      filePath: `api/files/${fileId}`,
     });
 
     res.status(201).json({
@@ -158,22 +189,22 @@ router.put("/resumes/:id", upload.single("image"), async (req, res) => {
       resume.email = email;
     }
 
-    // If a new file was uploaded
+    let previousFilePath;
+
     if (req.file) {
-
-      // Delete old file
-      if (resume.filePath && fs.existsSync(resume.filePath)) {
-        fs.unlinkSync(resume.filePath);
-      }
-
-      // Save new file information
+      const fileId = await uploadResumeFile(req.file);
+      previousFilePath = resume.filePath;
       resume.fileName = req.file.originalname;
       resume.fileType = req.file.mimetype;
       resume.fileSize = req.file.size;
-      resume.filePath = req.file.path;
+      resume.filePath = `api/files/${fileId}`;
     }
 
     await resume.save();
+
+    if (previousFilePath) {
+      await deleteResumeFile(previousFilePath);
+    }
 
     res.status(200).json({
       success: true,
@@ -220,10 +251,7 @@ router.delete("/resumes/:id", async (req, res) => {
       });
     }
 
-    // Delete physical file from uploads folder
-    if (resume.filePath && fs.existsSync(resume.filePath)) {
-      fs.unlinkSync(resume.filePath);
-    }
+    await deleteResumeFile(resume.filePath);
 
     // Delete resume from MongoDB
     await Resume.findByIdAndDelete(id);

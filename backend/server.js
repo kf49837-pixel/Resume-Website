@@ -9,6 +9,14 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api", async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Make uploaded files accessible in the browser
 app.use("/uploads", express.static("uploads"));
@@ -25,8 +33,10 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-connectDB();
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+module.exports = app;
