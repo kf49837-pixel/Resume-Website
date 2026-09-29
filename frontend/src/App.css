@@ -1,3 +1,138 @@
+.resume-sheet {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 720px;
+  padding: 48px 52px;
+  background: #fff;
+  color: #1c2521;
+  box-shadow: 0 12px 38px rgb(28 37 33 / 10%);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.resume-header {
+  border-bottom: 2px solid #176b50;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.resume-header h2 {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.resume-title {
+  margin: 8px 0 0;
+  color: #176b50;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.resume-contact {
+  margin: 12px 0 0;
+  color: #59635e;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.resume-section {
+  margin-top: 23px;
+}
+
+.resume-section h3 {
+  margin: 0 0 11px;
+  border-bottom: 1px solid #cbd6d0;
+  padding-bottom: 6px;
+  color: #176b50;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resume-entry + .resume-entry {
+  margin-top: 15px;
+}
+
+.resume-entry-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.resume-entry-heading span {
+  flex-shrink: 0;
+  color: #59635e;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+
+.resume-muted,
+.resume-copy {
+  margin: 5px 0 0;
+  color: #37413b;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.resume-muted {
+  color: #66716a;
+}
+
+.resume-placeholder {
+  margin-top: 40px;
+  color: #909a94;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .resume-sheet {
+    min-height: 600px;
+    padding: 32px 25px;
+  }
+
+  .resume-entry-heading {
+    flex-direction: column;
+    gap: 3px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #resume-preview,
+  #resume-preview * {
+    visibility: visible;
+  }
+
+  #resume-preview {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 18mm 19mm;
+    box-shadow: none;
+  }
+}
 .counter {
   font-size: 16px;
   padding: 5px 10px;

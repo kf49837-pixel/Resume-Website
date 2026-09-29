@@ -19,7 +19,7 @@ function Navbar() {
           </h1>
 
           <p className="text-[10px] uppercase tracking-[0.25em] text-gray-400 mt-1">
-            Resume Management
+            Resume Builder
           </p>
         </Link>
 
@@ -27,7 +27,7 @@ function Navbar() {
         <div className="hidden md:flex items-center gap-8">
 
           <NavLink to="/" className={navClass}>
-            Home
+            Resume Maker
           </NavLink>
 
           <NavLink to="/upload" className={navClass}>
@@ -61,7 +61,7 @@ function Navbar() {
             duration-300
           "
         >
-          Upload Resume
+          Create Resume
         </Link>
 
       </div>

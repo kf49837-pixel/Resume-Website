@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Home from "./pages/Home";
+import ResumeMaker from "./pages/ResumeMaker";
 import UploadResume from "./pages/UploadResume";
 import Resumes from "./pages/Resumes";
 
@@ -13,7 +13,7 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<ResumeMaker />} />
         <Route path="/upload" element={<UploadResume />} />
         <Route path="/resumes" element={<Resumes />} />
       </Routes>

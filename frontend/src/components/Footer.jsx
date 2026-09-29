@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="bg-black border-t border-white/10 text-white">
+    <footer className="site-footer bg-black border-t border-white/10 text-white">
       <div className="max-w-7xl mx-auto px-6 py-12">
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -14,8 +14,7 @@ function Footer() {
             </h2>
 
             <p className="text-gray-500 text-sm mt-3 max-w-sm leading-relaxed">
-              A modern platform to upload, organize and manage your
-              professional resumes in one place.
+              Create a polished resume, preview it live, and save it as a PDF.
             </p>
           </div>
 
@@ -31,7 +30,7 @@ function Footer() {
                 to="/"
                 className="block text-gray-400 hover:text-[#D4AF37] transition"
               >
-                Home
+                Resume Maker
               </Link>
 
               <Link
@@ -58,8 +57,7 @@ function Footer() {
             </h3>
 
             <p className="text-gray-500 text-sm mt-4 leading-relaxed">
-              Simple, organized and professional resume management
-              for modern job seekers.
+              A clear, practical tool to build and export your next resume.
             </p>
           </div>
 
